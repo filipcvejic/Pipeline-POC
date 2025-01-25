@@ -1,0 +1,26 @@
+name: Failure Test Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-failure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start Pipeline
+        run: echo "Starting the pipeline..."
+
+      - name: Simulate Success Step
+        run: echo "This step succeeds!"
+
+      - name: Simulate Failure Step
+        run: |
+          echo "This step will fail!"
+          exit 1
+
+      - name: This step won't run
+        if: success()
+        run: echo "All previous steps succeeded, so this step is executing."
